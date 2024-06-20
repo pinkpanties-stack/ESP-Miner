@@ -1,0 +1,304 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+            - name: Download a Build Artifact
+  uses: actions/download-artifact@v4.1.7            - name: Setup Java JDK
+  uses: actions/setup-java@v4.2.1
+  with:
+    # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
+    java-version: # optional
+    # The path to the `.java-version` file. See examples of supported syntax in README file
+    java-version-file: # optional
+    # Java distribution. See the list of supported distributions in README file
+    distribution: 
+    # The package type (jdk, jre, jdk+fx, jre+fx)
+    java-package: # optional, default is jdk
+    # The architecture of the package (defaults to the action runner's architecture)
+    architecture: # optional
+    # Path to where the compressed JDK is located
+    jdkFile: # optional
+    # Set this option if you want the action to check for the latest available version that satisfies the version spec
+    check-latest: # optional
+    # ID of the distributionManagement repository in the pom.xml file. Default is `github`
+    server-id: # optional, default is github
+    # Environment variable name for the username for authentication to the Apache Maven repository. Default is $GITHUB_ACTOR
+    server-username: # optional, default is GITHUB_ACTOR
+    # Environment variable name for password or token for authentication to the Apache Maven repository. Default is $GITHUB_TOKEN
+    server-password: # optional, default is GITHUB_TOKEN
+    # Path to where the settings.xml file will be written. Default is ~/.m2.
+    settings-path: # optional
+    # Overwrite the settings.xml file if it exists. Default is "true".
+    overwrite-settings: # optional, default is true
+    # GPG private key to import. Default is empty string.
+    gpg-private-key: # optional
+    # Environment variable name for the GPG private key passphrase. Default is $GPG_PASSPHRASE.
+    gpg-passphrase: # optional
+    # Name of the build platform to cache dependencies. It can be "maven", "gradle" or "sbt".
+    cache: # optional
+    # The path to a dependency file: pom.xml, build.gradle, build.sbt, etc. This option can be used with the `cache` option. If this option is omitted, the action searches for the dependency file in the entire repository. This option supports wildcards and a list of file names for caching multiple dependencies.
+    cache-dependency-path: # optional
+    # Workaround to pass job status to post job step. This variable is not intended for manual setting
+    job-status: # optional, default is ${{ job.status }}
+    # The token used to authenticate when fetching version manifests hosted on github.com, such as for the Microsoft Build of OpenJDK. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Name of Maven Toolchain ID if the default name of "${distribution}_${java-version}" is not wanted. See examples of supported syntax in Advanced Usage file
+    mvn-toolchain-id: # optional
+    # Name of Maven Toolchain Vendor if the default name of "${distribution}" is not wanted. See examples of supported syntax in Advanced Usage file
+    mvn-toolchain-vendor: # optional            - name: Setup .NET Core SDK
+  uses: actions/setup-dotnet@v4.0.0
+  with:
+    # Optional SDK version(s) to use. If not provided, will install global.json version when available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
+    dotnet-version: # optional
+    # Optional quality of the build. The possible values are: daily, signed, validated, preview, ga.
+    dotnet-quality: # optional
+    # Optional global.json location, if your global.json isn't located in the root of the repo.
+    global-json-file: # optional
+    # Optional package source for which to set up authentication. Will consult any existing NuGet.config in the root of the repo and provide a temporary NuGet.config using the NUGET_AUTH_TOKEN environment variable as a ClearTextPassword
+    source-url: # optional
+    # Optional OWNER for using packages from GitHub Package Registry organizations/users other than the current repository's owner. Only used if a GPR URL is also provided in source-url
+    owner: # optional
+    # Optional NuGet.config location, if your NuGet.config isn't located in the root of the repo.
+    config-file: # optional
+    # Optional input to enable caching of the NuGet global-packages folder
+    cache: # optional
+    # Used to specify the path to a dependency file: packages.lock.json. Supports wildcards or a list of file names for caching multiple dependencies.
+    cache-dependency-path: # optional
+                      - name: EKS on Fargate
+  # You may pin to the exact commit or the version.
+  # uses: aws-actions/amazon-eks-fargate@fa91b1ce6e342eb17a1d57df976506d02f074640
+  uses: aws-actions/amazon-eks-fargate@v0.1.1            - name: Satellite file upload
+  # You may pin to the exact commit or the version.
+  # uses: IBM/satellite-config-upload-action@fa11109a47c82d0adf3f02c3a3ba59d4a4db7054
+  uses: IBM/satellite-config-upload-action@v1.0.1
+  with:
+    # IBM Cloud API key
+    apikey: 
+    # Satellite Config channelUuid
+    channelUuid: 
+    # File to upload
+    filename: 
+    # Name of the new version
+    versionName: 
+    # IBM Cloud Satellite API endpoint
+    satelliteHost: # optional, default is https://config.satellite.cloud.ibm.com/graphql
+    # IBM Cloud IAM endpoint
+    tokenHost: # optional, default is https://iam.cloud.ibm.com/identity/token
+                      - name: mobbdev
+  # You may pin to the exact commit or the version.
+  # uses: mobb-dev/action@d885db729514077fbcf30bce356c3d68153e61ab
+  uses: mobb-dev/action@v1.1
+  with:
+    # Path to SAST report file
+    report-file: 
+    # Mobb API key
+    api-key: 
+    # GitaHub Token
+    github-token: 
+          
+          
+                      - name: SecureStack Application Composition Analysis
+  # You may pin to the exact commit or the version.
+  # uses: SecureStackCo/actions-code@c2c35840882d041474c505c1045da157025cd57e
+  uses: SecureStackCo/actions-code@v0.1.1
+  with:
+    # SecureStack API key - generate an API key at https://app.securestack.com
+    securestack_api_key: 
+    # SecureStack Application ID - can be retrieved by accessing required application at https://app.securestack.com
+    securestack_app_id: 
+    # Severities lower than this value will be reported in the workflow console but will not cause an error for the action; value should be one of: critical | high | medium | low
+    severity: 
+    # Severities lower than this value will be reported in the workflow console but will not cause an error for the action; value should be one of: critical | high | medium | low
+    language: 
+    # Optional flags for the bloodhound-cli code command - run bloodhound cli code --help for more details
+    flags: # optional, default is             - name: Deploy Amazon Redis DB cluster (ElastiCache)
+  # You may pin to the exact commit or the version.
+  # uses: bitovi/github-actions-deploy-redis-db@8807af9ea8aa2c154022945a0c388e446e3b61a8
+  uses: bitovi/github-actions-deploy-redis-db@v0.1.1
+  with:
+    # Will run only the generation phase of BitOps, where the Terraform and Ansible code is built.
+    bitops_code_only: # optional
+    # Store BitOps code as a GitHub artifact
+    bitops_code_store: # optional
+    # AWS access key ID
+    aws_access_key_id: 
+    # AWS secret access key
+    aws_secret_access_key: 
+    # AWS session token
+    aws_session_token: # optional
+    # AWS default region
+    aws_default_region: # optional, default is us-east-1
+    # Set to override the AWS resource identifier for the deployment.  Defaults to `${org}-{repo}-{branch}`.  Use with destroy to destroy specific resources.
+    aws_resource_identifier: # optional
+    # A JSON object of additional tags that will be included on created resources. Example: `{"key1": "value1", "key2": "value2"}`
+    aws_additional_tags: # optional
+    # Set to "true" to Destroy the stack through Terraform.
+    tf_stack_destroy: # optional
+    # Change this to be anything you want to. Carefull to be consistent here. A missing file could trigger recreation, or stepping over destruction of non-defined objects.
+    tf_state_file_name: # optional
+    # Append a string to the tf-state-file. Setting this to `unique` will generate `tf-state-aws-unique`. Can co-exist with the tf_state_file_name variable. 
+    tf_state_file_name_append: # optional
+    # AWS S3 bucket to use for Terraform state. Defaults to `${org}-${repo}-{branch}-tf-state`
+    tf_state_bucket: # optional
+    # Force purge and deletion of S3 bucket defined. Any file contained there will be destroyed. `tf_stack_destroy` must also be `true`
+    tf_state_bucket_destroy: # optional
+    # Enables the creation of a Redis instance
+    aws_redis_enable: # optional, default is true
+    # Redis username. Defaults to redisuser
+    aws_redis_user: # optional
+    # String expression for user access. Defaults to on ~* +@all
+    aws_redis_user_access_string: # optional
+    # User group name. Defaults to aws_resource_identifier-redis
+    aws_redis_user_group_name: # optional
+    # Redis security group name. Defaults to SG for aws_resource_identifier - Redis
+    aws_redis_security_group_name: # optional
+    # Allow access from 0.0.0.0/0 in the same VPC
+    aws_redis_ingress_allow_all: # optional
+    # Comma separated list of security groups to be added to the Redis SG.
+    aws_redis_allowed_security_groups: # optional
+    # Define a list of specific subnets where Redis will live. Defaults to all of the VPC ones. If not defined, default VPC.
+    aws_redis_subnets: # optional
+    # Redis port. Defaults to 6379
+    aws_redis_port: # optional
+    # Encryption at rest. Defaults to true.
+    aws_redis_at_rest_encryption: # optional
+    # In-transit encryption. Defaults to true.
+    aws_redis_in_transit_encryption: # optional
+    # Name of the Redis replication group. Defaults to aws_resource_identifier-redis
+    aws_redis_replication_group_id: # optional
+    # Node type of the Redis instance. Defaults to cache.t2.small
+    aws_redis_node_type: # optional
+    # Amount of Redis nodes. Defaults to 1
+    aws_redis_num_cache_clusters: # optional
+    # Redis parameters groups name. If cluster wanted, set it to something that includes .cluster.on. Defaults to default.redis7
+    aws_redis_parameter_group_name: # optional
+    # Number of node groups. Defaults to 0.
+    aws_redis_num_node_groups: # optional
+    # Number of replicas per node group. Defaults to 0
+    aws_redis_replicas_per_node_group: # optional
+    # Enables multi-availability-zone redis. Defaults to false
+    aws_redis_multi_az_enabled: # optional
+    # Allows overriding the automatic configuration of this value, only needed when playing with resources in a non-conventional way.
+    aws_redis_automatic_failover: # optional
+    # Specifies whether any modifications are applied immediately, or during the next maintenance window. Default is false.
+    aws_redis_apply_immediately: # optional
+    # Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window. Defaults to true.
+    aws_redis_auto_minor_upgrade: # optional
+    # Specifies the weekly time range for when maintenance on the cache cluster is performed. Example:sun:05:00-sun:06:00. Defaults to null.
+    aws_redis_maintenance_window: # optional
+    # Daily time range (in UTC) when to start taking a daily snapshot. Minimum is a 60 minute period. Example: 05:00-09:00. Defaults to null.
+    aws_redis_snapshot_window: # optional
+    # Change name to define a final snapshot.
+    aws_redis_final_snapshot: # optional
+    # Set name to restore a snapshot to the cluster. The default behaviour is to restore it each time this action runs.
+    aws_redis_snapshot_restore_name: # optional
+    # Enable or disables Cloudwatch logging.
+    aws_redis_cloudwatch_enabled: # optional
+    # Cloudwatch log group name. Defaults to /aws/redis/aws_resource_identifier. Will append log_type to it.
+    aws_redis_cloudwatch_lg_name: # optional
+    # Define log format between json (default) and text.
+    aws_redis_cloudwatch_log_format: # optional
+    # Log type. Older Redis engines need slow-log. Newer support engine-log (default)
+    aws_redis_cloudwatch_log_type: # optional
+    # Number of days to retain logs. 0 to never expire. Default '14'
+    aws_redis_cloudwatch_retention_days: # optional
+    # Creates an AWS secret containing the connection string containing protocol://user@pass:endpoint:port
+    aws_redis_single_line_url_secret: # optional
+    # Additional tags to be added to every Redis related resource
+    aws_redis_additional_tags: # optional
+    # Define if a VPC should be created
+    aws_vpc_create: # optional
+    # Set a specific name for the VPC
+    aws_vpc_name: # optional
+    # Define Base CIDR block which is divided into subnet CIDR blocks. Defaults to 10.0.0.0/16.
+    aws_vpc_cidr_block: # optional
+    # Comma separated list of public subnets. Defaults to 10.10.110.0/24
+    aws_vpc_public_subnets: # optional
+    # Comma separated list of private subnets. If none, none will be created.
+    aws_vpc_private_subnets: # optional
+    # Comma separated list of availability zones. Defaults to `aws_default_region.
+    aws_vpc_availability_zones: # optional
+    # AWS VPC ID. Accepts `vpc-###` values.
+    aws_vpc_id: # optional
+    # Specify a Subnet to be used with the instance. If none provided, will pick one.
+    aws_vpc_subnet_id: # optional
+    # Enables NAT gateway
+    aws_vpc_enable_nat_gateway: # optional
+    # Creates only one NAT gateway
+    aws_vpc_single_nat_gateway: # optional
+    # Comma separated list of IP IDS to reuse in the NAT gateways
+    aws_vpc_external_nat_ip_ids: # optional
+    # A JSON object of additional tags that will be included on created resources. Example: `{"key1": "value1", "key2": "value2"}`
+    aws_vpc_additional_tags: # optional
+                      - name: PDM update dependencies
+  # You may pin to the exact commit or the version.
+  # uses: pdm-project/update-deps-action@f896accc0819df4ac92a2da4e0a5375d6896f3ae
+  uses: pdm-project/update-deps-action@v1.7
+  with:
+    # A personal access token
+    token: # optional, default is ${{ github.token }}
+    # The commit message
+    commit-message: # optional, default is chore: Update pdm.lock
+    # The PR title
+    pr-title: # optional, default is chore: Update pdm.lock
+    # The update strategy, can be 'reuse', 'eager' or 'all'
+    update-strategy: # optional, default is reuse
+    # Whether install PDM plugins before update
+    install-plugins: # optional, default is false
+    # Whether commit message contains signed-off-by
+    sign-off-commit: # optional, default is false
+          
+          
+  with:
+    # Name of the artifact to download. If unspecified, all artifacts for the run are downloaded.
+    name: # optional
+    # Destination path. Supports basic tilde expansion. Defaults to $GITHUB_WORKSPACE
+    path: # optional
+    # A glob pattern matching the artifacts that should be downloaded. Ignored if name is specified.
+    pattern: # optional
+    # When multiple artifacts are matched, this changes the behavior of the destination directories. If true, the downloaded artifacts will be in the same directory specified by path. If false, the downloaded artifacts will be extracted into individual named directories within the specified path.
+    merge-multiple: # optional, default is false
+    # The GitHub token used to authenticate with the GitHub API. This is required when downloading artifacts from a different repository or from a different workflow run. If this is not specified, the action will attempt to download artifacts from the current repository and the current workflow run.
+    github-token: # optional
+    # The repository owner and the repository name joined together by "/". If github-token is specified, this is the repository that artifacts will be downloaded from.
+    repository: # optional, default is ${{ github.repository }}
+    # The id of the workflow run where the desired download artifact was uploaded from. If github-token is specified, this is the run that artifacts will be downloaded from.
+    run-id: # optional, default is ${{ github.run_id }}
+          
+    steps:
+    - uses: actions/checkout@v4            - name: Cache
+  uses: actions/cache@v4.0.2
+  with:
+    # A list of files, directories, and wildcard patterns to cache and restore
+    path: 
+    # An explicit key for restoring and saving the cache
+    key: 
+    # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
+    restore-keys: # optional
+    # The chunk size used to split up large files during upload, in bytes
+    upload-chunk-size: # optional
+    # An optional boolean when enabled, allows windows runners to save or restore caches that can be restored or saved respectively on other platforms
+    enableCrossOsArchive: # optional, default is false
+    # Fail the workflow if cache entry is not found
+    fail-on-cache-miss: # optional, default is false
+    # Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache
+    lookup-only: # optional, default is false
+    # Run the post step to save the cache even if another step before fails
+    save-always: # optional, default is false
+          
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
